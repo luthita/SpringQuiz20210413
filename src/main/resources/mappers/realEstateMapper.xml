@@ -17,7 +17,100 @@
         FROM
             `real_estate`
         WHERE
- 			`rentPrice` = #{rentPrice}
+ 			`id` = #{id}
     </select>
-
+    
+    <select id="selectRealEstateListByRentPrice" parameterType="int" resultType="com.luthita.lesson03.model.Real_Estate">
+    	SELECT
+            `id`
+            ,`realtorId`
+            ,`address`
+            ,`area`
+            ,`type`
+            ,`price`
+            ,`rentPrice`
+            ,`createdAt`
+            ,`updatedAt`
+        FROM
+            `real_estate`
+    	WHERE
+    		<![CDATA[
+    			`rentPrice` <= #{rentPrice}
+    		]]>
+    </select>
+		
+	<select id="selectRealEstateListByAreaAndPrice" parameterType="map" resultType="com.luthita.lesson03.model.Real_Estate">
+    	SELECT
+            `id`
+            ,`realtorId`
+            ,`address`
+            ,`area`
+            ,`type`
+            ,`price`
+            ,`rentPrice`
+            ,`createdAt`
+            ,`updatedAt`
+        FROM
+            `real_estate`
+    	WHERE
+    		`type` = '매매'
+    		<![CDATA[
+    			AND `area` >= #{area}
+    			AND `price` <= #{price}
+    		]]>
+    	ORDER BY
+    		`id` DESC
+    </select>
+    
+    <insert id="insertReal_Estate" parameterType="com.luthita.lesson03.model.Real_Estate">
+    	INSERT INTO `real_estate`
+    	(
+            `realtorId`
+            ,`address`
+            ,`area`
+            ,`type`
+            ,`price`
+            ,`rentPrice`
+            ,`createdAt`
+            ,`updatedAt`
+    	)
+    	VALUES
+    	(
+    		#{realtorId}
+    		, #{address}
+    		, #{area}
+    		, #{type}
+    		, #{price}
+    		, NULL
+    		, NOW()
+    		, NOW()
+    	)
+    	
+    </insert>
+    
+    <insert id="insertReal_EstateAsField" parameterType="com.luthita.lesson03.model.Real_Estate">
+    	INSERT INTO `real_estate`
+    	(
+            `realtorId`
+            ,`address`
+            ,`area`
+            ,`type`
+            ,`price`
+            ,`rentPrice`
+            ,`createdAt`
+            ,`updatedAt`
+    	)
+    	VALUES
+    	(
+    		#{realtorId}
+    		, #{address}
+    		, #{area}
+    		, #{type}
+    		, #{price}
+    		, NULL
+    		, NOW()
+    		, NOW()
+    	)
+    	
+    </insert>
  </mapper>
