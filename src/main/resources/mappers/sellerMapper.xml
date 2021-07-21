@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.luthita.lesson04.dao.SellerDAO">
+ 	<insert id="insertSeller" parameterType="map">
+ 		INSERT INTO `seller`
+ 		(
+ 			`nickname`
+ 			, `profileImageUrl`
+ 			, `temperature`
+ 		)
+ 		VALUES
+ 		(
+ 			#{nickname}
+ 			, #{profileImageUrl}
+ 			, #{temperature}
+ 		)
+ 	</insert>
+ 	
+ 	<select id="getLastSeller" resultType="com.luthita.lesson04.model.Seller">
+ 		SELECT
+ 			`nickname`
+ 			, `profileImageUrl`
+ 			, `temperature`
+ 		FROM
+ 			`SELLER`
+ 		ORDER BY
+ 			`id` DESC
+ 		LIMIT 1;
+ 	</select>
+ 	
+ 	<select id="getLastSellerById" resultType="com.luthita.lesson04.model.Seller">
+ 		SELECT
+ 			`nickname`
+ 			, `profileImageUrl`
+ 			, `temperature`
+ 		FROM
+ 			`SELLER`
+ 		WHERE
+ 			`id` =#{id}
+ 	</select>
+ </mapper>
