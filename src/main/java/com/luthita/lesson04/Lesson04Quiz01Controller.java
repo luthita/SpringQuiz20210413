@@ -45,7 +45,7 @@ public class Lesson04Quiz01Controller {
 	
 	@RequestMapping("/lesson04/quiz01/seller_info")
 	public String sellerInfoView(
-			@RequestParam("id") Integer id,
+			@RequestParam(value="id", required=false) Integer id,
 			Model model
 		) {
 		// id parameter가 없는 경우, 가장 최근 등록된 판매자 정보가 나옴
