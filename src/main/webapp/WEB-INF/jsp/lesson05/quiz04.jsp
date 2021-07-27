@@ -53,7 +53,7 @@
 					<strong>${fn:split(member.email, '@')[0]}</strong>@${fn:split(member.email, '@')[1]}
 					</td>
 					
-					<td>
+					<td class="text-left">
 					<c:choose>
 						<c:when test="${fn:length(member.introduce) > 15 }">
 							${fn:substring(member.introduce,0,15)} ...
