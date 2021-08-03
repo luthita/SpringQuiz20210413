@@ -1,9 +1,12 @@
 @charset "UTF-8";
 
-#wrap {width:800px;}
-
+#wrap{width:600px;}
 header{height:100px;}
 
 .contents {height:1000px;}
 
 footer {height:100px;}
+
+.box_border{border:3px solid; border-color:darkturquoise; border-radius:10px}
+
+.menu_bg{border:1px solid; border-color:#c0c0c0; border-radius:5px; background-color:#c0c0c0; }

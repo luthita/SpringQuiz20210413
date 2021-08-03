@@ -18,9 +18,9 @@
 	<div class="container">
 		<h1>즐겨찾기 추가하기</h1>
 		<b>제목</b><br>
-		<input type="text" id="name" name="name" class="form-control" placeholder="제목을 입력해주세요"><br>
+		<input type="text" id="name" class="form-control" placeholder="제목을 입력해주세요"><br>
 		<b>주소</b><br>
-		<input type="text" id="address" name="address" class="form-control" placeholder="주소를 입력해주세요"><br>
+		<input type="text" id="address" class="form-control" placeholder="주소를 입력해주세요"><br>
 		<input type="submit" id="addBtn" class="btn btn-success" value="추가" >
 	</div>
 </body>
@@ -30,14 +30,14 @@
 		$('#addBtn').on('click', function(e){
 			
 			// validation check
-			let name = $('input[name=name]').val().trim();
+			let name = $('#name').val().trim();
 			if(name == ''){
 				alert("이름을 입력해주세요.");
 				return;
 			}
 			
-			let address = $('input[name=address]').val().trim();
-			if(address = ''){
+			let address = $('#address').val().trim();
+			if(address == ''){
 				alert("주소를 입력해주세요.");
 				return;
 			}

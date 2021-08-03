@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.luthita.lesson05.dao.New_ReviewDAO">
+   <select id="selectNew_ReviewListByStoreId" resultType="com.luthita.lesson05.model.New_Review">
+       SELECT
+           `id`
+           , `storeId`
+           , `menu`
+           , `userName`
+           , `point`
+           , `review`
+           , `createdAt`
+           , `updatedAt`
+       FROM
+           `new_review`
+       WHERE
+       		`storeId` = #{storeId}
+   </select>
+
+ </mapper>
