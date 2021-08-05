@@ -15,4 +15,6 @@ public interface FavoriteDAO {
 			@Param("address") String address);
 	
 	public List<Favorite> selectFavoriteList();
+	
+	public int deleteFavoriteById(int id);
 }

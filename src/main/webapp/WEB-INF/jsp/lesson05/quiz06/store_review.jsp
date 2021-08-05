@@ -27,11 +27,7 @@
 		<sector class="contents">
 			<h1 class="display-4">${storeName} - 리뷰</h1>
 			<c:forEach var="newReview" items="${newReviewList }">
-				<c:if test="${empty newReview || review == ''}">
-					<div>
-						<h2>작성된 리뷰가 없습니다.</h2>
-					</div>
-				</c:if>
+				
 				<div class="box_border p-3 mt-3 mb-3">
 					<strong class="font-weight-bold">${newReview.userName }</strong>
 					<fmt:parseNumber var="intPoint" integerOnly="true" value="${newReview.point }"/>
@@ -68,6 +64,11 @@
 					<small class="menu_bg p-1">${newReview.menu}</small>
 				</div>
 			</c:forEach>
+			<c:if test="${empty newReviewList || newReviewList == ''}">
+					<div>
+						<h2 class="display-6 text-center font-weight-bold p-5">작성된 리뷰가 없습니다.</h2>
+					</div>
+				</c:if>
 		</sector>
 		<hr>
 		<footer>

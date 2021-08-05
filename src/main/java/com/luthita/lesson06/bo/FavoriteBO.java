@@ -21,4 +21,8 @@ public class FavoriteBO {
 		return favoriteDAO.selectFavoriteList();
 	}
 	
+	public int deleteFavoriteById(int id) {
+		return favoriteDAO.deleteFavoriteById(id);
+	}
+	
 }
