@@ -1,5 +1,6 @@
 package com.luthita.lesson06;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,24 @@ public class Lesson06Quiz03Controller {
 		int deletedRow = bookingBO.deleteBookingById(id);
 		
 		return deletedRow == 1 ? "success" : "fail";
+	}
+	
+	@RequestMapping("/lesson06/reservation")
+	public String reservation() {
+		
+		return "lesson06/pensionReserve";
+	}
+	
+	@RequestMapping("/lesson06/insert_booking")
+	@ResponseBody
+	public String insertBooking(
+			@RequestParam("name") String name,
+			@RequestParam("date") Date date,
+			@RequestParam("day") int day,
+			@RequestParam("headcount") int headcount,
+			@RequestParam("phoneNumber") String phoneNumber) {
+		
+		bookingBO.insertBooking(name, date, day, headcount, phoneNumber);
+		return "success";
 	}
 }

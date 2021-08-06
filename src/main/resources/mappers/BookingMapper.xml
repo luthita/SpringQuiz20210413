@@ -26,4 +26,29 @@
 	WHERE
 		`id` = #{id}
 	</delete>
+	
+	<insert id="insertBooking" parameterType="com.luthita.lesson06.model.Booking">
+    	INSERT INTO `booking`
+    	(
+            `name`
+            , `date`
+            , `day`
+            , `headcount`
+            , `phoneNumber`
+            , `state`
+            , `updatedAt`
+            , `createdAt`
+    	)
+    	VALUES
+    	(
+    		#{name}
+    		, #{date}
+    		, #{day}
+    		, #{headcount}
+    		, #{phoneNumber}
+    		, '대기중'
+    		, NOW()
+    		, NOW()
+    	)
+    </insert>
  </mapper>

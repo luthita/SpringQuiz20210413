@@ -1,5 +1,6 @@
 package com.luthita.lesson06.bo;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,9 @@ public class BookingBO {
 	
 	public int deleteBookingById(int id) {
 		return bookingDAO.deleteBookingById(id);
+	}
+	
+	public void insertBooking(String name, Date date, int day, int headcount, String phoneNumber) {
+		bookingDAO.insertBooking(name, date, day, headcount, phoneNumber);
 	}
 }

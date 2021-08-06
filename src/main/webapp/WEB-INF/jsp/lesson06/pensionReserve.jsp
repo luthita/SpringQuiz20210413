@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,47 +33,26 @@
                 <ul class="nav nav-fill">
                     <li class="nav-item"><a href="/lesson06/pension_home" class="nav-link text-white font-weight-bold">팬션소개</a></li>
                     <li class="nav-item"><a href="#" class="nav-link text-white font-weight-bold">객실보기</a></li>
-                    <li class="nav-item"><a href="/lesson06/reservation" class="nav-link text-white font-weight-bold">예약하기</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white font-weight-bold">예약하기</a></li>
                     <li class="nav-item"><a href="/lesson06/reservation_list" class="nav-link text-white font-weight-bold">예약목록</a></li>
                 </ul>
             </nav>
-            <section class="contents">
-            	<h2 class="font-weight-bold text-center p-4">예약 목록 보기</h3>
-            	<table class="table text-center">
-            		<thead>
-            			<tr>
-            				<th>이름</th>
-            				<th>예약날짜</th>
-            				<th>숙박일수</th>
-            				<th>숙박인원</th>
-            				<th>전화번호</th>
-            				<th>예약상태</th>
-            				<th></th>
-            			</tr>
-            		</thead>
-            		<tbody>
-            			<c:forEach var="booking" items="${bookingList }">
-            			<tr>
-            				<td>${booking.name }</td>
-            				<td><fmt:formatDate value="${booking.date}" pattern="yyyy년 M월 d일" /></td>
-            				<td>${booking.day }</td>
-            				<td>${booking.headcount }</td>
-            				<td>${booking.phoneNumber }</td>
-            				
-           					<c:choose>
-           						<c:when test="${booking.state eq '대기중'}">
-           							<td class="text-info">${booking.state }</td>
-           						</c:when>
-           						<c:otherwise>
-           							<td class="text-success">${booking.state }</td>
-           						</c:otherwise>
-           					</c:choose>
-           					
-            				<td><button type="button" class="reserved-btn btn btn-danger" data-reserved-id="${booking.id }"/>삭제</td>
-            			</tr>
-            			</c:forEach>
-            		</tbody>
-            	</table>
+            <section class="d-flex justify-content-center ">
+            	<div class="col-6">
+	            	<h2 class="font-weight-bold text-center p-4">예약 하기</h3>
+	            	이름<br>
+	            	<input type="text" class="form-control" id="name"><br>
+	            	예약날짜<br>
+	            	<input type="text" id="date" name="date" class="form-control"><br>
+	            	
+	            	숙박일수<br>
+	            	<input type="text" class="form-control" id="day"><br>
+	            	숙박인원<br>
+	            	<input type="text" class="form-control" id="headcount"><br>
+	            	전화번호<br>
+	            	<input type="text" class="form-control" id="phoneNumber"><br>
+	            	<button class="btn btn-warning btn-block" id="reserveBtn" >예약하기</button>
+            	</div>
             </section>
             <footer>
                 <div class="address m-3">
@@ -86,28 +63,70 @@
             </footer>
         </div>
     </body>
-    
     <script>
-    	$(document).ready(function(){
+    	$(document).on('click', function(){
     		
-    		$('.reserved-btn').on('click', function(){
-    			let reservedId = $(this).data('reserved-id');
+    		$('#date').datepicker({
+                dateFormat: "yy년 mm월 dd일" // 2021년 00월 00일
+                , minDate: 0   // 오늘 날짜 이후로 선택
+            });
+    		
+    		$('#reserveBtn').on('click', function(){
     			
-    			$.ajax({
-    				type: 'post'
-    				, url:'/lesson06/delete_reserved'
-    				, data: {'reserved_Id': reservedId}
-    				, success: function(data){
-    					if(data == 'success'){
-    						location.reload();
-    					} else{
-    						alert("서버에서 삭제처리를 하지 못했습니다.");
-    					}
-    				}, error: function(e){
-    					alert("error : " + e);
-    				}
-    				
-    			});
+				let name = $('#name').val().trim();
+				if(name==''){
+					alert("이름을 적어주세요");
+					return;
+				}
+				
+				let date = $('#date').val().trim();
+				if(date==''){
+					alert("날짜를 입력해주세요");
+					return;
+				}
+				
+				let day = $('#day').val().trim();
+				if(day==''){
+					alert("숙박일수를 적어주세요");
+					return;
+				}
+				
+				let headcount = $('#headcount').val().trim();
+				if(headcount==''){
+					alert("숙박인원을 적어주세요");
+					return;
+				}
+				
+				let phoneNumber = $('#phoneNumber').val().trim();
+				if(phoneNumber==''){
+					alert("전화번호를 적어주세요");
+					return;
+				}
+    			
+				var yyyy = date.substr(0,4);
+				var mm = date.substr(6,2);
+				var dd = date.substr(10,2);
+				
+				var new_date = new Date(yyyy,mm-1,dd);
+				
+				$.ajax({
+					type: 'post'
+					, data: {'name' : name
+							,'date' : new_date
+							,'day' : day
+							,'headcount':headcount
+							,'phoneNumber':phoneNumber}
+					, url:'/lesson06/insert_booking'
+					, success: function(data){
+						if(data == 'success'){
+							location.href='/lesson06/reservation_list';
+						} else{
+							alert("서버에서 입력처리를 하지 못했습니다.");
+						}
+					}, error: function(e){
+						alert("error : " + e);
+					}
+				});
     		});
     	});
     </script>
