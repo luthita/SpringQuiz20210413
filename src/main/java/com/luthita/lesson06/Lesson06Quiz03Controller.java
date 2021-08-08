@@ -1,7 +1,9 @@
 package com.luthita.lesson06;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,5 +62,19 @@ public class Lesson06Quiz03Controller {
 		
 		bookingBO.insertBooking(name, date, day, headcount, phoneNumber);
 		return "success";
+	}
+	
+	@RequestMapping("/lesson06/search_booking")
+	@ResponseBody
+	public Map<String, Object> searchBooking(
+			@RequestParam("name") String name,
+			@RequestParam("phoneNumber") String phoneNumber) {
+		
+		Map<String, Object> result = new HashMap<>();
+		Booking booking =  bookingBO.selectBookingByNameAndPhoneNumber(name, phoneNumber);
+		result.put("result", "success");
+		result.put("data", booking);
+		
+		return result;
 	}
 }

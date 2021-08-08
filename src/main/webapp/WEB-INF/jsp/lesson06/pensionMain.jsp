@@ -61,7 +61,7 @@
 
                         <!-- 버튼 -->
                         <div class="text-right mt-3">
-                            <button type="button" class="btn btn-success submit-btn">조회 하기</button>
+                            <button type="button" class="btn btn-success" id="submit-btn">조회 하기</button>
                         </div>
                     </div>
                 </section>
@@ -84,29 +84,23 @@
         <script>
             $(document).ready(function() {
                 
-                // 2-2. 날짜 영역 datePicker로 선택하기
-                $('#reserveDateText').datepicker({
-                    dateFormat: "yy년 mm월 dd일" // 2021년 00월 00일
-                    , minDate: 0   // 오늘 날짜 이후로 선택
-                });
-
+               
                 // 조회하기 버튼 클릭
-                $('.submit-btn').on('click', function(e) {
-                    e.preventDefault();
+                $('#submit-btn').on('click', function() {
 
-                    var memberRadioValue = $('input:radio[name=member]:checked').val(); // 라디오 버튼 중 선택된 value
-                    console.log(memberRadioValue); // member or nonMember
-
-                    if ($('#name').val().trim() == '') {
+                    let name = $('#name').val().trim();
+                    if (name == '') {
                         alert("이름을 입력하세요");
                         return;
                     }
 
-                    if ($('#phoneNumber').val().trim() == '') {
+                    let phoneNumber = $('#phoneNumber').val().trim();
+                    if (phoneNumber == '') {
                         alert("전화번호를 입력하세요");
                         return;
                     }
 
+                   
                     // 전화번호가 010으로 시작하는지 확인
                     //-- 첫번째 방법
                     //var frontNumber = $('#phoneNumber').val().slice(0, 3);
@@ -117,11 +111,31 @@
                     // }
 
                     //-- 두번째 방법
-                    if ($('#phoneNumber').val().startsWith('010') === false) {
+                    if (phoneNumber.startsWith('010') === false) {
                         alert("010으로 시작하는 번호만 입력 가능합니다.");
                         return;
                     }
                     
+                   
+                    $.ajax({
+                    	type: 'post'
+                    	, data: {'name' : name
+                    			,'phoneNumber' : phoneNumber}
+                    	, url: '/lesson06/search_booking'
+                    	, success: function(data){
+                    		if(data.result == 'success'){
+                    			alert("이름 : " + data.data.name + "\n" +
+                    					"날짜 : " + data.data.date + "\n" +
+                    					"일수 : " + data.data.day + "\n" +
+                    					"인원 : " + data.data.headcount + "\n" +
+                    					"상태 : " + data.data.state);
+                    		} else{
+                    			alert("예약 내역이 없습니다.");
+                    		}
+                    	}, error: function(e){
+                    		alert("error : " + e);
+                    	}
+                    });
                 });
 
                 // 이미지 3초 간격으로 변경하기

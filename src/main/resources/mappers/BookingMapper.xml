@@ -51,4 +51,24 @@
     		, NOW()
     	)
     </insert>
+    
+    <select id="selectBookingByNameAndPhoneNumber" resultType="com.luthita.lesson06.model.Booking" parameterType="map">
+    	SELECT
+			`id`
+			, `name`
+			, `headcount`
+			, `day`
+			, `date`
+			, `phoneNumber`
+			, `state`
+			, `createdAt`
+			, `updatedAt`
+			
+		FROM
+			`booking`
+		WHERE
+			`name` = #{name} 
+			AND
+			`phoneNumber` = #{phoneNumber}
+	</select>
  </mapper>

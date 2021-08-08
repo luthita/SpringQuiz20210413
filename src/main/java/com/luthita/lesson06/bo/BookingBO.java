@@ -2,6 +2,7 @@ package com.luthita.lesson06.bo;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,9 @@ public class BookingBO {
 	
 	public void insertBooking(String name, Date date, int day, int headcount, String phoneNumber) {
 		bookingDAO.insertBooking(name, date, day, headcount, phoneNumber);
+	}
+	
+	public Booking selectBookingByNameAndPhoneNumber(String name, String phoneNumber) {
+		return bookingDAO.selectBookingByNameAndPhoneNumber(name, phoneNumber);
 	}
 }
